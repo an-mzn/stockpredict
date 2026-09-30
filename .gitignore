@@ -9,3 +9,12 @@ venv/
 .ipynb_checkpoints/
 *.keras
 *.h5
+outputs/
+.idea/
+.vscode/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+build/
+dist/
+*.egg-info/

@@ -12,9 +12,8 @@ import argparse
 import numpy as np
 import pandas as pd
 
-# Ensure non-interactive backend so the script runs without a GUI
+# Matplotlib selects an interactive backend when available and a headless one otherwise.
 import matplotlib
-matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 from sklearn.preprocessing import MinMaxScaler
@@ -44,12 +43,20 @@ def main():
     parser.add_argument("--batch_size", type=int, default=1, help="Batch size (default: 1)")
     parser.add_argument("--window", type=int, default=60, help="Lookback window (default: 60)")
     parser.add_argument("--outdir", default="outputs", help="Directory to save plots/CSVs")
+    parser.add_argument("--show", action="store_true", help="Display plots as well as saving them")
     args = parser.parse_args()
 
     os.makedirs(args.outdir, exist_ok=True)
 
     # 1) Download data
-    df = yf.download(args.ticker, start=args.start, end=args.end, progress=False)
+    df = yf.download(
+        args.ticker,
+        start=args.start,
+        end=args.end,
+        progress=False,
+        auto_adjust=False,
+        multi_level_index=False,
+    )
     if df.empty:
         raise RuntimeError("No data downloaded. Check ticker/date range or network connection.")
     close = df["Close"].copy()
@@ -111,6 +118,8 @@ def main():
     plt.ylabel("Close Price USD ($)", fontsize=12)
     plt.tight_layout()
     plt.savefig(os.path.join(args.outdir, "01_close_price_history.png"), dpi=180)
+    if args.show:
+        plt.show()
     plt.close()
 
     # Train/Val/Predictions
@@ -124,6 +133,8 @@ def main():
     plt.legend(loc="lower right")
     plt.tight_layout()
     plt.savefig(os.path.join(args.outdir, "02_train_valid_predictions.png"), dpi=180)
+    if args.show:
+        plt.show()
     plt.close()
 
     # 11) Single-step next prediction using last 60 closes in the downloaded range
