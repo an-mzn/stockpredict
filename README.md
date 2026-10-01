@@ -4,11 +4,13 @@
 
 **Originally developed:** January–March 2024
 
+**Repository:** [github.com/an-mzn/stockpredict](https://github.com/an-mzn/stockpredict)
+
 ## Overview
 
 The primary script downloads historical closing prices with `yfinance`, creates rolling lookback windows, trains a Keras LSTM, and compares its predictions with a chronological validation period. It reports validation RMSE and writes plots and a CSV for inspection. The default example uses Apple (AAPL) data from 2012 to 2019.
 
-The command-line version is the primary implementation. For Colab-style inline charts in VS Code, open [`stockpredict_demo.ipynb`](stockpredict_demo.ipynb), select the Python 3.11 environment where you installed the dependencies, and run its cell. Two earlier Colab-derived script variants are preserved under [`examples/colab/`](examples/colab/) as references.
+The command-line version is the primary implementation. For inline charts in VS Code or Jupyter, open [`stockpredict_demo.ipynb`](stockpredict_demo.ipynb), select the Python 3.11 environment where you installed the dependencies, and run its cell. Two earlier Colab-derived script variants are preserved under [`examples/colab/`](examples/colab/) for reference; they are not the recommended entry point.
 
 ## What it does
 
@@ -65,8 +67,6 @@ The primary script uses an 80/20 chronological split, a scaler fit on the traini
 
 This is a small historical experiment, not a validated trading system. The default data period ends in 2019; the reported single-step prediction is based on the last window in whichever period was downloaded, not a live market forecast. Results depend on the downloaded data and model training run. The scripts do not include automated tests or a saved trained model.
 
-## Provenance and release notes
+## Project background
 
-The source identifies the earlier scripts as Colab-generated and describes the model as following a common LSTM tutorial pattern, but it does not identify the original tutorial or its reuse terms. Those terms should be checked before public release. The Colab Drive URL was removed from the current script files, but it remains in the existing Git commit. Confirm the notebook's sharing status and decide whether history should be rewritten before making this repository public. The repository does not include the notebook itself.
-
-No licence is included. The repository history contains one preservation commit dated August 28, 2026; it does not represent the 2024 development history. The author email in that commit will be visible to people viewing public Git history.
+This began as a small Colab learning experiment in 2024. The earlier script variants follow a common LSTM tutorial pattern, but the original tutorial and its reuse terms were not recorded. The command-line implementation is the primary version presented here.
